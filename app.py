@@ -173,6 +173,13 @@ def api_quiz():
 
     try:
         questions = llm.generate_quiz(text, n, extra=extra)
+        # bersihkan penanda LaTeX di tiap field soal
+        for q in questions:
+            for field in ("pertanyaan", "jawaban", "penjelasan"):
+                if q.get(field):
+                    q[field] = _clean_latex(q[field])
+            if isinstance(q.get("pilihan"), list):
+                q["pilihan"] = [_clean_latex(p) for p in q["pilihan"]]
         return jsonify({"questions": questions, "count": len(questions), "target": n})
     except llm.LLMError as e:
         return jsonify({"error": str(e)}), 400
@@ -198,6 +205,52 @@ def _clean_ai_output(text):
         cut = min(positions)
         if cut > 80:
             text = text[:cut].rstrip()
+    return _clean_latex(text)
+
+
+_LATEX_SYMBOLS = [
+    (r"\rightarrow", "→"), (r"\leftarrow", "←"), (r"\Rightarrow", "⇒"),
+    (r"\times", "×"), (r"\cdot", "·"), (r"\pm", "±"), (r"\mp", "∓"),
+    (r"\approx", "≈"), (r"\leq", "≤"), (r"\geq", "≥"), (r"\neq", "≠"),
+    (r"\infty", "∞"), (r"\propto", "∝"), (r"\hbar", "ħ"), (r"\sum", "Σ"),
+    (r"\Delta", "Δ"), (r"\delta", "δ"), (r"\alpha", "α"), (r"\beta", "β"),
+    (r"\gamma", "γ"), (r"\lambda", "λ"), (r"\mu", "μ"), (r"\nu", "ν"),
+    (r"\pi", "π"), (r"\theta", "θ"), (r"\sigma", "σ"), (r"\Sigma", "Σ"),
+    (r"\omega", "ω"), (r"\Omega", "Ω"), (r"\varepsilon", "ε"),
+    (r"\phi", "φ"), (r"\Phi", "Φ"), (r"\rho", "ρ"), (r"\tau", "τ"),
+    (r"\chi", "χ"), (r"\psi", "ψ"), (r"\eta", "η"),
+]
+
+
+def _clean_latex(text):
+    """Buang penanda LaTeX & ubah perintah umum jadi karakter biasa."""
+    if not text:
+        return text
+    text = text.replace("\\[", "").replace("\\]", "")
+    text = text.replace("\\(", "").replace("\\)", "")
+    # \text{...} -> ... ; \frac{a}{b} -> (a)/(b)
+    text = re.sub(r"\\text\{([^}]*)\}", r"\1", text)
+    text = re.sub(r"\\frac\{([^}]*)\}\{([^}]*)\}", r"(\1)/(\2)", text)
+    for src, dst in _LATEX_SYMBOLS:
+        text = text.replace(src, dst)
+    return _fix_scripts(text)
+
+
+def _fix_scripts(text):
+    superscript = str.maketrans("0123456789+-=()n", "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ⁿ")
+    subscript = str.maketrans("0123456789+-=()n", "₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎ₙ")
+
+    def _sub(m):
+        return m.group(1).translate(subscript)
+
+    def _sup(m):
+        return m.group(1).translate(superscript)
+
+    text = re.sub(r"\^\{([0-9+\-=()n]+)\}", _sup, text)
+    text = re.sub(r"_\{([0-9+\-=()n]+)\}", _sub, text)
+    # angka tunggal tanpa kurung: E_2 -> E₂, b^2 -> b²
+    text = re.sub(r"_([0-9])", lambda m: m.group(1).translate(subscript), text)
+    text = re.sub(r"\^([0-9])", lambda m: m.group(1).translate(superscript), text)
     return text
 
 
