@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Belajar bersama Alma</title>
+  <link rel="icon" type="image/svg+xml" href="/static/alma.svg">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <img class="avatar" src="/static/alma.svg" alt="Alma, teman belajar">
+      <div>
+        <h1>Belajar bersama Alma</h1>
+        <p>Halo! Aku <strong>Alma</strong> 👋 — teman belajarmu. Aku bisa merangkum materi, merekap data, dan bikin soal-jawaban buat kamu.</p>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="bahan">📄 Bahan</button>
+    <button class="tab-btn" data-tab="ringkasan" disabled id="btn-ringkasan">📝 Ringkasan</button>
+    <button class="tab-btn" data-tab="rekap" disabled id="btn-rekap">📊 Rekap Data</button>
+    <button class="tab-btn" data-tab="kuis" disabled id="btn-kuis">🧠 Kuis</button>
+    <button class="tab-btn" data-tab="pengaturan">⚙️ Pengaturan</button>
+  </nav>
+
+  <main class="wrap">
+    <!-- ============ BAHAN ============ -->
+    <section class="tab active" id="tab-bahan">
+      <div class="grid-2">
+        <div class="card">
+          <h2>Masukkan Bahan Belajar</h2>
+          <div class="dropzone" id="dropzone">
+            <input type="file" id="file-input" multiple
+                   accept=".pdf,.docx,.doc,.ppt,.pptx,.xlsx,.xls,.csv,.tsv,.txt,.md,.log,.py,.json,.html,.htm">
+            <div class="dz-icon">📂</div>
+            <p><strong>Klik atau seret file ke sini</strong></p>
+            <p class="muted">PDF, Word, PowerPoint, Excel, CSV, TXT, dll.</p>
+            <div id="file-list" class="file-list"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Atau Tempel Link</h2>
+          <textarea id="url-input" rows="3" placeholder="https://contoh.com/materi-belajar"></textarea>
+          <button class="btn primary full" id="btn-process">✨ Proses Bahan</button>
+          <div id="status" class="status hidden"></div>
+        </div>
+      </div>
+
+      <div class="card hidden" id="result-card">
+        <h2>Hasil Proses</h2>
+        <div id="doc-summary" class="doc-summary"></div>
+      </div>
+    </section>
+
+    <!-- ============ RINGKASAN ============ -->
+    <section class="tab" id="tab-ringkasan">
+      <div class="card">
+        <div class="row-between">
+          <h2>Catatan Belajar (Ringkasan)</h2>
+          <div class="row-gap">
+            <button class="btn ghost hidden" id="btn-dl-summary-docx">⬇ Word</button>
+            <button class="btn ghost hidden" id="btn-dl-summary-pdf">⬇ PDF</button>
+            <button class="btn primary" id="btn-summary">✨ Buat Catatan</button>
+          </div>
+        </div>
+        <p class="muted">Alma menyusun bahanmu jadi catatan belajar yang rapi — memuat poin penting, istilah &amp; definisi, rumus/konsep kunci, serta data/fakta penting. Bisa dipakai untuk semua mata pelajaran/kuliah.</p>
+        <label class="check"><input type="checkbox" id="sum-enrich" checked> 🌐 Perkaya info dari internet (Wikipedia)</label>
+        <div id="summary-out" class="md-out placeholder">Aku bakal susun bahanmu jadi catatan belajar yang rapi + data penting di sini ✨</div>
+      </div>
+    </section>
+
+    <!-- ============ REKAP DATA ============ -->
+    <section class="tab" id="tab-rekap">
+      <div class="card">
+        <div class="row-between">
+          <h2>Rekap Data (Excel / CSV)</h2>
+          <button class="btn primary hidden" id="btn-recap-ai">✨ Jelaskan Datanya</button>
+        </div>
+        <p class="muted">Alma rekap statistik otomatis dari file Excel/CSV yang kamu unggah.</p>
+        <div id="recap-out" class="placeholder">Unggah file Excel/CSV di tab Bahan, nanti aku rekap statistiknya di sini 📊</div>
+      </div>
+    </section>
+
+    <!-- ============ KUIS ============ -->
+    <section class="tab" id="tab-kuis">
+      <div class="card">
+        <h2>Latihan Soal &amp; Jawaban</h2>
+        <p class="muted">Alma otomatis membuat soal <strong>pilihan ganda + esai</strong> dalam jumlah yang menyesuaikan bahan (bisa 10–20+ soal untuk materi yang lengkap), lengkap dengan kunci jawaban &amp; penjelasan. Cocok untuk semua mata pelajaran/kuliah.</p>
+        <div class="quiz-config">
+          <label class="check"><input type="checkbox" id="quiz-enrich" checked> 🌐 Perkaya soal dari internet (Wikipedia)</label>
+          <button class="btn primary" id="btn-quiz">🧠 Buat Soal Otomatis</button>
+          <button class="btn ghost hidden" id="btn-dl-quiz-docx">⬇ Word</button>
+          <button class="btn ghost hidden" id="btn-dl-quiz-pdf">⬇ PDF</button>
+        </div>
+        <div id="quiz-out" class="placeholder">Aku bakal bikinin soal latihan (PG + esai) + jawaban buat kamu di sini 🧠</div>
+      </div>
+    </section>
+
+    <!-- ============ PENGATURAN ============ -->
+    <section class="tab" id="tab-pengaturan">
+      <div class="card narrow">
+        <h2>Pengaturan API</h2>
+        <p class="muted">Isi sekali, tersimpan di laptop ini. Data ini tidak dikirim ke mana-mana selain ke server API.</p>
+
+        <label class="field">Base URL (alamat API)
+          <input type="text" id="cfg-base" placeholder="https://kenari.id/v1">
+        </label>
+        <label class="field">API Key
+          <input type="password" id="cfg-key" placeholder="kn-...">
+        </label>
+        <label class="field">Model untuk Ringkasan
+          <select id="cfg-model-summary"></select>
+        </label>
+        <label class="field">Model untuk Kuis
+          <select id="cfg-model-quiz"></select>
+        </label>
+
+        <div class="row-gap">
+          <button class="btn primary" id="btn-save-cfg">💾 Simpan</button>
+          <button class="btn ghost" id="btn-test-cfg">🔌 Tes Koneksi</button>
+        </div>
+        <div id="cfg-status" class="status hidden"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="overlay" class="overlay hidden">
+    <div class="loader">
+      <div class="loader-icons">
+        <span class="li">⚗️</span>
+        <span class="li math">+</span>
+        <span class="li math">×</span>
+        <span class="li math">÷</span>
+        <span class="li integral">∫</span>
+        <span class="li">📐</span>
+        <span class="li">🏛️</span>
+      </div>
+      <p class="loader-text" id="overlay-text">Tunggu ya, Alma lagi menyiapkan…</p>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
