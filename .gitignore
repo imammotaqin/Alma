@@ -1,0 +1,18 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Konfigurasi lokal (berisi API key) — JANGAN di-commit
+config.json
+
+# Environment lokal
+.env
+.env.*
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
