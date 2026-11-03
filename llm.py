@@ -31,6 +31,7 @@ def _chat(messages, temperature=0.4, max_tokens=2500, timeout=300, model=None):
         "messages": messages,
         "temperature": temperature,
         "max_tokens": max_tokens,
+        "reasoning_effort": "low",
     }
     try:
         r = requests.post(url, json=payload, headers=headers, timeout=timeout)
@@ -147,7 +148,7 @@ def _summary_once(text, extra="", model=None):
             "Informasi tambahan dari internet di bawah ini boleh dipakai HANYA untuk melengkapi "
             "bagian materi yang kosong/menjadi konteks, JANGAN menggantikan isi materi:\n" + extra
         )
-    return _chat([{"role": "user", "content": prompt}], temperature=0.3, max_tokens=8000, model=model)
+    return _chat([{"role": "user", "content": prompt}], temperature=0.3, max_tokens=12000, model=model)
 
 
 # ---------------------------------------------------------------- soal
