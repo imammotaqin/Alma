@@ -110,7 +110,7 @@ def summarize(text, extra=""):
         raise LLMError("Belum ada bahan untuk diringkas.")
     # Satu panggilan saja. Kalau materinya sangat panjang, potong ke batas yang
     # masih aman untuk satu konteks (tinggi, supaya materi tidak kelewat).
-    MAX_CHARS = 60000
+    MAX_CHARS = 30000
     if len(text) > MAX_CHARS:
         text = text[:MAX_CHARS].rstrip() + "\n\n[Materi dipotong karena sangat panjang.]"
 
@@ -119,15 +119,17 @@ def summarize(text, extra=""):
     fallback = "deepseek-v4-flash" if primary != "deepseek-v4-flash" else "deepseek-v4-1-flash"
 
     last_err = None
-    # coba model utama (biasanya pro = detail). Kalau kosong/gagal, fallback ke model cepat.
+    # coba model utama lalu fallback. Kumpulkan detail error agar mudah dilacak.
+    details = []
     for model in (primary, fallback):
         try:
             result = _summary_once(text, extra, model=model)
             if result and len(result.strip()) >= 100:
                 return result
+            details.append(f"{model}: hasil terlalu pendek ({len(result)} char)")
         except LLMError as e:
-            last_err = e
-    raise last_err or LLMError("Gagal membuat catatan belajar. Coba lagi.")
+            details.append(f"{model}: {e}")
+    raise LLMError("Ringkasan gagal: " + (" | ".join(details) if details else "tidak ada hasil"))
 
 
 def _summary_once(text, extra="", model=None):
