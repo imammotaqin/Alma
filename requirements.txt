@@ -1,0 +1,11 @@
+flask
+requests
+beautifulsoup4
+lxml
+pandas
+openpyxl
+xlrd
+python-docx
+python-pptx
+PyMuPDF
+reportlab
