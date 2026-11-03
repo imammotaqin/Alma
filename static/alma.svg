@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 260" role="img" aria-label="Alma, teman belajar kimia">
+  <defs>
+    <linearGradient id="abg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EAFBF6"/>
+      <stop offset="1" stop-color="#D8F2EA"/>
+    </linearGradient>
+    <linearGradient id="ahyj" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2FC0A8"/>
+      <stop offset="1" stop-color="#12826F"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background -->
+  <circle cx="130" cy="130" r="124" fill="url(#abg)"/>
+  <circle cx="130" cy="130" r="122" fill="none" stroke="#A8E0D3" stroke-width="2" opacity=".6"/>
+
+  <!-- dekorasi atom (kiri atas) -->
+  <g opacity=".55" stroke="#8FC5B8" stroke-width="2.2" fill="none" stroke-linecap="round">
+    <ellipse cx="52" cy="58" rx="17" ry="7.5" transform="rotate(-28 52 58)"/>
+    <circle cx="52" cy="58" r="3.4" fill="#6FB4A4" stroke="none"/>
+    <circle cx="40" cy="54" r="3" fill="#6FB4A4" stroke="none"/>
+    <circle cx="68" cy="52" r="3" fill="#6FB4A4" stroke="none"/>
+  </g>
+
+  <!-- ===== JAS LABORATORIUM ===== -->
+  <path d="M84 260 L84 218 C84 200, 98 188, 130 188 C162 188, 176 200, 176 218 L176 260 Z" fill="#FFFFFF"/>
+  <!-- kerah dalam -->
+  <path d="M130 206 L116 234 L144 234 Z" fill="#CFE0EF"/>
+  <!-- lapel -->
+  <path d="M130 206 L121 230 L130 216 Z" fill="#FFFFFF"/>
+  <path d="M130 206 L139 230 L130 216 Z" fill="#FFFFFF"/>
+  <!-- saku + pulpen -->
+  <rect x="150" y="216" width="20" height="16" rx="3" fill="#EAF1F9" stroke="#D5E2F0"/>
+  <rect x="158" y="208" width="4" height="9" rx="2" fill="#F28E2B"/>
+  <!-- kancing -->
+  <circle cx="130" cy="240" r="3" fill="#B9C9DC"/>
+  <circle cx="130" cy="253" r="3" fill="#B9C9DC"/>
+
+  <!-- ===== KERUDUNG ===== -->
+  <ellipse cx="120" cy="66" rx="20" ry="9" fill="#7AD9CB" opacity=".5"/>
+  <ellipse cx="130" cy="108" rx="48" ry="54" fill="url(#ahyj)"/>
+  <rect x="96" y="160" width="68" height="42" rx="21" fill="#10806F"/>
+
+  <!-- ===== WAJAH ===== -->
+  <ellipse cx="130" cy="116" rx="37" ry="43" fill="#F7C9A5"/>
+  <path d="M99 78 C 118 66, 142 66, 161 78" stroke="#7AD9CB" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- blush -->
+  <ellipse cx="101" cy="132" rx="7" ry="4.5" fill="#F5A08C" opacity=".55"/>
+  <ellipse cx="159" cy="132" rx="7" ry="4.5" fill="#F5A08C" opacity=".55"/>
+
+  <!-- mata -->
+  <ellipse cx="112" cy="116" rx="9" ry="10" fill="#FFFFFF"/>
+  <ellipse cx="148" cy="116" rx="9" ry="10" fill="#FFFFFF"/>
+  <circle cx="114" cy="118" r="5.4" fill="#4A3B33"/>
+  <circle cx="146" cy="118" r="5.4" fill="#4A3B33"/>
+  <circle cx="116" cy="115" r="1.9" fill="#FFFFFF"/>
+  <circle cx="148" cy="115" r="1.9" fill="#FFFFFF"/>
+
+  <!-- alis -->
+  <path d="M102 101 Q112 93 122 101" stroke="#7A5540" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M138 101 Q148 93 158 101" stroke="#7A5540" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- kacamata -->
+  <g stroke="#3A3F4A" stroke-width="3.2" fill="none">
+    <circle cx="112" cy="116" r="14.5" fill="#E8F5FD" fill-opacity=".4"/>
+    <circle cx="148" cy="116" r="14.5" fill="#E8F5FD" fill-opacity=".4"/>
+    <path d="M126.5 116 Q130 111 133.5 116"/>
+    <path d="M98 112 L90 107"/>
+    <path d="M162 112 L170 107"/>
+  </g>
+
+  <!-- hidung -->
+  <path d="M130 124 Q128 132 131 134" stroke="#E6A07E" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+
+  <!-- senyum -->
+  <path d="M119 140 Q130 149 141 140" stroke="#E3796B" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+</svg>
