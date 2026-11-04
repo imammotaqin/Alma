@@ -86,6 +86,8 @@ def test_connection():
 # ---------------------------------------------------------------- catatan belajar
 SUMMARY_INSTRUCTION = (
     "Berdasarkan MATERI di atas, buatlah CATATAN BELAJAR yang SANGAT LENGKAP dan MENYELURUH dalam Bahasa Indonesia. "
+    "PENTING: jika materi ditulis dalam bahasa asing (mis. Inggris, Jepang, Arab, dll.), TERJEMAHKAN dulu ke Bahasa Indonesia, "
+    "lalu susun catatannya dalam Bahasa Indonesia agar mudah dipahami.\n"
     "Tulis SEMUA informasi penting dari materi, JANGAN ada yang terlewat. "
     "Materi bisa dari mata pelajaran/kuliah apa saja (matematika, fisika, kimia, biologi, sejarah, ekonomi, dll.).\n\n"
     "Tulis dengan format Markdown berikut, langsung mulai dari '## ' tanpa kata pembuka:\n\n"
@@ -159,6 +161,7 @@ def _quiz_prompt(n, text, extra=""):
         f"<MATERI>\n{text}\n</MATERI>\n\n"
         f"Berdasarkan MATERI di atas, buatkan {n} soal latihan dalam Bahasa Indonesia, "
         f"campuran: {mc} soal PILIHAN GANDA dan {es} soal ESAI/uraian, dari mudah sampai menantang. "
+        "Jika materi berbahasa asing, TERJEMAHKAN dulu ke Bahasa Indonesia sebelum membuat soal. "
         "Materi bisa dari mata pelajaran/kuliah apa saja.\n\n"
         "Format setiap soal PILIHAN GANDA:\n"
         '{"type": "mc", "pertanyaan": "...", "pilihan": ["A", "B", "C", "D"], "jawaban": "B", "penjelasan": "..."}\n\n'
